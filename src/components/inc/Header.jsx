@@ -136,7 +136,7 @@ function Header() {
 
   useEffect(() => {
     async function loadNav() {
-      const res = await fetch('http://localhost:3000/api/navigation');
+      const res = await fetch('https://api-vercel-master.onrender.com');
       const data = await res.json();
       setNavItems(data);
       setLoading(false);
