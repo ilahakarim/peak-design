@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router";
+import useAutoSlide from "../../hooks/useAutoSlide";
 
 const images = [
     "/image/new-arrivals/news.webp",
@@ -12,34 +12,7 @@ const images = [
 ];
 
 const NewArrivals = () => {
-    const [activeImage, setActiveImage] = useState(0);
-    const sectionRef = useRef(null);
-    const hasTriggered = useRef(false);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting && !hasTriggered.current) {
-                        hasTriggered.current = true;
-
-                        const interval = setInterval(() => {
-                            setActiveImage((prev) => (prev + 1) % images.length);
-                        }, 2000);
-
-                        return () => clearInterval(interval);
-                    }
-                });
-            },
-            { threshold: 0.3 }
-        );
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
-        }
-
-        return () => observer.disconnect();
-    }, []);
+    const { activeIndex, sectionRef } = useAutoSlide(images.length);
 
     return (
         <section ref={sectionRef} className="md:px-12 px-6 sm:px-8 lg:px-16 py-12 sm:py-16 bg-[#000000] flex flex-col lg:flex-row min-h-[500px] lg:m-auto">
@@ -69,7 +42,7 @@ const NewArrivals = () => {
                         src={src}
                         alt=""
                         className={`w-full h-full absolute inset-0 object-cover transition-opacity duration-1000 ease-in-out ${
-                            activeImage === i ? "opacity-100" : "opacity-0"
+                            activeIndex === i ? "opacity-100" : "opacity-0"
                         }`}
                     />
                 ))}

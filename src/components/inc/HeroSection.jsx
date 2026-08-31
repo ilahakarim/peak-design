@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 import heroBg from "../../assets/hero-bg.webp";
 import heroVideo from "../../assets/hero-video.mp4";
 function HeroSection() {
@@ -37,13 +38,13 @@ function HeroSection() {
         </p>
 
         <div className="pt-6 gap-3 sm:gap-6 flex flex-col sm:flex-row justify-center">
-            <a href="" className="text-[12px] lg:text-[16px] w-full sm:w-auto uppercase py-3 px-6 rounded-sm text-center text-[#000000] bg-[#EBFFA8] hover:bg-[#DDF87E]">
+            <Link to="/collections/all" className="text-[12px] lg:text-[16px] w-full sm:w-auto uppercase py-3 px-6 rounded-sm text-center text-[#000000] bg-[#EBFFA8] hover:bg-[#DDF87E]">
                 shop now
-            </a>
+            </Link>
 
-            <a href="" className="text-[12px] lg:text-[16px] w-full sm:w-auto uppercase py-3 px-6 rounded-sm text-center text-[#EBFFA8] border border-[#EBFFA8] bg-transparent hover:text-[#DDF87E] hover:border-[#DDF87E]">
+            <Link to="/city-line" className="text-[12px] lg:text-[16px] w-full sm:w-auto uppercase py-3 px-6 rounded-sm text-center text-[#EBFFA8] border border-[#EBFFA8] bg-transparent hover:text-[#DDF87E] hover:border-[#DDF87E]">
                 learn more
-            </a>
+            </Link>
         </div>
     </div>
 </section>

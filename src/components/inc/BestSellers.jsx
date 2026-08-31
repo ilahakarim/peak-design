@@ -1,8 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import ProductCard from "./ProductCard";
+import { DATA } from "../../Context/Context";
 
 const categories = ["CITY", "TRAVEL", "EVERYDAY", "OUTDOOR", "CAMERA GEAR", "MOBILE", "WALLETS", "MOTO"];
-const API_URL = "https://6a77021263e9caf860c33e8d.mockapi.io/products";
+
+// How many products to show per category in Best Sellers
+const MAX_PRODUCTS_PER_CATEGORY = 6;
 
 const getStep = () => {
     const w = window.innerWidth;
@@ -12,9 +15,7 @@ const getStep = () => {
 };
 
 const BestSellers = () => {
-    const [allProducts, setAllProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const { mehsul: allProducts = [] } = useContext(DATA);
 
     const [activeCategory, setActiveCategory] = useState("CITY");
     const [step, setStep] = useState(getStep());
@@ -24,28 +25,14 @@ const BestSellers = () => {
     const trackRef = useRef(null);
 
     useEffect(() => {
-        fetch(API_URL)
-            .then((res) => {
-                if (!res.ok) throw new Error("Server xətası: " + res.status);
-                return res.json();
-            })
-            .then((data) => {
-                setAllProducts(data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                setError(err.message);
-                setLoading(false);
-            });
-    }, []);
-
-    useEffect(() => {
         const onResize = () => setStep(getStep());
         window.addEventListener("resize", onResize);
         return () => window.removeEventListener("resize", onResize);
     }, []);
 
-    const products = allProducts.filter((p) => p.category === activeCategory);
+    const products = allProducts
+        .filter((p) => p.category === activeCategory)
+        .slice(0, MAX_PRODUCTS_PER_CATEGORY);
     const totalPages = Math.max(1, Math.ceil(products.length / step));
 
     useEffect(() => {
@@ -113,7 +100,7 @@ const BestSellers = () => {
                         <button
                             key={cat}
                             onClick={() => setActiveCategory(cat)}
-                            className={`whitespace-nowrap uppercase text-[11px] sm:text-[13px] lg:text-[14px] px-3 sm:px-5 py-2 sm:py-3 rounded-full border transition-colors shrink-0 ${
+                            className={`whitespace-nowrap uppercase text-[11px] sm:text-[13px] lg:text-[14px] px-3 sm:px-5 py-2 sm:py-3 rounded-full border transition-colors shrink-0 cursor-pointer ${
                                 activeCategory === cat
                                     ? "bg-black text-white border-black"
                                     : "bg-gray-100 text-black border-transparent hover:bg-gray-200"
@@ -128,10 +115,11 @@ const BestSellers = () => {
                     <button
                         onClick={handlePrev}
                         disabled={isPrevDisabled}
+                        aria-label="Previous products"
                         className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full border flex items-center justify-center transition-colors ${
                             isPrevDisabled
                                 ? "border-gray-200 text-gray-300 bg-gray-100 cursor-not-allowed"
-                                : "border-black text-black hover:bg-gray-100"
+                                : "border-black text-black hover:bg-gray-100 cursor-pointer"
                         }`}
                     >
                         ←
@@ -139,10 +127,11 @@ const BestSellers = () => {
                     <button
                         onClick={handleNext}
                         disabled={isNextDisabled}
+                        aria-label="Next products"
                         className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full border flex items-center justify-center transition-colors ${
                             isNextDisabled
                                 ? "border-gray-200 text-gray-300 bg-gray-100 cursor-not-allowed"
-                                : "border-black text-black hover:bg-gray-100"
+                                : "border-black text-black hover:bg-gray-100 cursor-pointer"
                         }`}
                     >
                         →
@@ -150,10 +139,8 @@ const BestSellers = () => {
                 </div>
             </div>
 
-            {loading ? (
-                <p className="text-center text-gray-400 py-16">Yüklənir...</p>
-            ) : error ? (
-                <p className="text-center text-red-400 py-16">Xəta: {error}</p>
+            {allProducts.length === 0 ? (
+                <p className="text-center text-gray-400 py-16">Loading...</p>
             ) : products.length > 0 ? (
                 <>
                     <div
@@ -187,7 +174,7 @@ const BestSellers = () => {
                 </>
             ) : (
                 <p className="text-center text-gray-400 py-16">
-                    Bu kateqoriyada hələ məhsul yoxdur
+                    No products in this category yet
                 </p>
             )}
         </section>

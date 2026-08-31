@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 const CompanyPromoSections = () => {
+    const [isVideoOpen, setIsVideoOpen] = useState(false);
+
     return (
         <>
   
@@ -25,12 +29,12 @@ const CompanyPromoSections = () => {
                             All of our bags are Fair Trade certified. Learn how we inspired our new Philippines factory to be the first Fair Trade factory in the country.
                         </p>
 
-                        
-                           <a href="/films"
-                            className="inline-flex items-center gap-2 w-fit uppercase text-[12px] sm:text-[13px] lg:text-[14px] font-medium border border-white px-6 sm:px-8 py-3 sm:py-4 mt-6 sm:mt-8 hover:opacity-80 transition-opacity"> 
-                       
+                        <button
+                            onClick={() => setIsVideoOpen(true)}
+                            className="inline-flex items-center gap-2 w-fit uppercase text-[12px] sm:text-[13px] lg:text-[14px] font-medium border border-white px-6 sm:px-8 py-3 sm:py-4 mt-6 sm:mt-8 hover:opacity-80 transition-opacity cursor-pointer"
+                        >
                             Watch the film ▷
-                        </a>
+                        </button>
                     </div>
                 </div>
             </section>
@@ -67,6 +71,34 @@ const CompanyPromoSections = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Video popup */}
+            {isVideoOpen && (
+                <div
+                    onClick={() => setIsVideoOpen(false)}
+                    className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center px-4"
+                >
+                    <button
+                        onClick={() => setIsVideoOpen(false)}
+                        className="absolute top-6 right-6 text-white text-3xl cursor-pointer"
+                    >
+                        ✕
+                    </button>
+
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        className="w-full max-w-4xl aspect-video"
+                    >
+                        <iframe
+                            className="w-full h-full"
+                            src="https://www.youtube.com/embed/w8t06FGJz6E?start=1&autoplay=1"
+                            title="At The Expense Of Nobody"
+                            allow="autoplay; encrypted-media"
+                            allowFullScreen
+                        ></iframe>
+                    </div>
+                </div>
+            )}
         </>
     );
 };
