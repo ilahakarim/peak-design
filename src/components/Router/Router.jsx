@@ -11,7 +11,7 @@ import Mission from '../../pages/Mission'
 import ImpactReport from '../../pages/ImpactReport'
 import Films from '../../pages/Films'
 import Store from '../../pages/Store'
-import InfoPage from '../../pages/InfoPage'
+import InfoPage from '../../pages/Infopage'
 import ScrollToTop from './ScrollToTop'
 
 
@@ -33,7 +33,7 @@ function Router() {
                 <Route path='/impact-report' element={<ImpactReport/>}/>
                 <Route path='/films' element={<Films/>}/>
                 <Route path='store/:slug' element={<Store/>}/>
-                <Route path='info/:slug' element={<InfoPage/>}/>
+                <Route path='info/:slug' element={<Infopage/>}/>
             </Route>
         </Routes>
     </>
