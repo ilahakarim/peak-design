@@ -6,9 +6,9 @@ import Home from '../../pages/Home'
 import Login from '../../pages/Login'
 import ProductPage from '../../pages/ProductPage'
 import Wishlist from '../../pages/Wishlist'
-import CityLine from '../../pages/CityLine'
+import CityLine from '../../pages/Cityline'
 import Mission from '../../pages/Mission'
-import ImpactReport from '../../pages/ImpactReport'
+import ImpactReport from '../../pages/Impactreport'
 import Films from '../../pages/Films'
 import Store from '../../pages/Store'
 import InfoPage from '../../pages/Infopage'
@@ -33,7 +33,7 @@ function Router() {
                 <Route path='/impact-report' element={<ImpactReport/>}/>
                 <Route path='/films' element={<Films/>}/>
                 <Route path='store/:slug' element={<Store/>}/>
-                <Route path='info/:slug' element={<Infopage/>}/>
+                <Route path='info/:slug' element={<InfoPage/>}/>
             </Route>
         </Routes>
     </>
